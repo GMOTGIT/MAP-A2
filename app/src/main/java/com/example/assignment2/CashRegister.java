@@ -1,5 +1,7 @@
 package com.example.assignment2;
 
+import android.annotation.SuppressLint;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,24 +21,21 @@ public class CashRegister {
         listOfProducts.add(new Product ("Pante", "20.44", "10"));
         listOfProducts.add(new Product ("Shoes", "10.44", "100"));
         listOfProducts.add(new Product ("Hats", "5.9", "30"));
-
     }
-
-
 
     void push (String value){
         quantityWanted.add(value);
     }
 
     void addHistory (String name, String total, String quantity){
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         Date today = Calendar.getInstance().getTime();
         String date = df.format(today);
         HistoryList.add(new Product(name, total, quantity, date ));
     }
 
     String getQuantity (int position){
-        return listOfProducts.get(position).quantity;
+        return String.valueOf(listOfProducts.get(position).quantity);
     }
 
     String getName (int position){
@@ -44,14 +43,13 @@ public class CashRegister {
     }
 
     String getPrice(int position){
-        return listOfProducts.get(position).price;
+        return String.valueOf(listOfProducts.get(position).price);
     }
 
 
     void setQuantity (int position, int quantity){
-        int originalValue = Integer.parseInt(listOfProducts.get(position).quantity);
-        int result = originalValue - quantity;
-       listOfProducts.get(position).quantity = String.valueOf(result) ;
+        int originalValue = listOfProducts.get(position).quantity;
+        listOfProducts.get(position).quantity = originalValue - quantity;
     }
 
 

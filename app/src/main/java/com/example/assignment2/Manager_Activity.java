@@ -17,7 +17,7 @@ public class Manager_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager);
 
-        historyBut = (Button) findViewById(R.id.historybut);
+        historyBut = findViewById(R.id.historybut);
         myCashRegister = new CashRegister();
 
         if (getIntent().hasExtra("bundle")){

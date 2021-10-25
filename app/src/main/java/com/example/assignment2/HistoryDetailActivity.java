@@ -1,9 +1,11 @@
 package com.example.assignment2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class HistoryDetailActivity extends AppCompatActivity {
@@ -19,10 +21,10 @@ public class HistoryDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_detail);
-        historyNameText = (TextView) findViewById(R.id.historyNameText);
-        historyPriceText = (TextView) findViewById(R.id.historyPriceText);
-        historyQuantityText = (TextView) findViewById(R.id.historyQuantityText);
-        historyDateText = (TextView) findViewById(R.id.historyDateText);
+        historyNameText = findViewById(R.id.historyNameText);
+        historyPriceText = findViewById(R.id.historyPriceText);
+        historyQuantityText = findViewById(R.id.historyQuantityText);
+        historyDateText =  findViewById(R.id.historyDateText);
 
         myCashRegister = new CashRegister();
 
@@ -40,12 +42,29 @@ public class HistoryDetailActivity extends AppCompatActivity {
         String date = intent.getStringExtra("date");
 
 
-        historyNameText.setText("Product: " + name);
-        historyPriceText.setText("Price: " + price);
-        historyQuantityText.setText("Quantity: " + quantity);
-        historyDateText.setText("Purchase Date: "  + date);
+        historyNameText.setText(getString(R.string.productLine) + name);
+        historyPriceText.setText(getString(R.string.priceLine) + price);
+        historyQuantityText.setText(getString(R.string.quantityLine) + quantity);
+        historyDateText.setText(getString(R.string.dateLine)  + date);
 
 
 
+    }
+
+//    public void onBackPressed(){
+//        Intent myIntent = new Intent(this,History_Activity.class);
+//        Bundle outState = new Bundle();
+//        outState.putParcelableArrayList("history", myCashRegister.listOfProducts);
+//        myIntent.putExtra("bundle", outState);
+//        startActivity(myIntent);
+//
+//    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putParcelableArrayList("listofproducts", myCashRegister.listOfProducts);
     }
 }

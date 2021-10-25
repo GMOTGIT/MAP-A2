@@ -8,17 +8,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 
 public class MainActivity extends AppCompatActivity
@@ -50,7 +45,7 @@ public class MainActivity extends AppCompatActivity
     CashRegisterAdapter adapter;
 
     private CashRegister myCashRegister;
-
+    //This will keep track of the selected item
     int item = -1;
 
 
@@ -58,32 +53,29 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
         setContentView(R.layout.activity_main);
-        managerBut = (Button) findViewById(R.id.managerbut);
-        num1 = (Button) findViewById(R.id.one);
-        num2 = (Button) findViewById(R.id.two);
-        num3 = (Button) findViewById(R.id.three);
-        num4 = (Button) findViewById(R.id.four);
-        num5 = (Button) findViewById(R.id.five);
-        num6 = (Button) findViewById(R.id.six);
-        num7 = (Button) findViewById(R.id.seven);
-        num8 = (Button) findViewById(R.id.eight);
-        num9 = (Button) findViewById(R.id.nine);
-        num0 = (Button) findViewById(R.id.zero);
+        managerBut =  findViewById(R.id.managerbut);
+        num1 = findViewById(R.id.one);
+        num2 =  findViewById(R.id.two);
+        num3 =  findViewById(R.id.three);
+        num4 =  findViewById(R.id.four);
+        num5 =  findViewById(R.id.five);
+        num6 =  findViewById(R.id.six);
+        num7 =  findViewById(R.id.seven);
+        num8 =  findViewById(R.id.eight);
+        num9 =  findViewById(R.id.nine);
+        num0 =  findViewById(R.id.zero);
 
 
-        cBut = (Button) findViewById(R.id.cOp);
-        buyBut = (Button) findViewById(R.id.buy);
+        cBut =  findViewById(R.id.cOp);
+        buyBut =  findViewById(R.id.buy);
 
-        productlist = (ListView) findViewById(R.id.list);
+        productlist =  findViewById(R.id.list);
 
 
-        productTypeText = (TextView) findViewById(R.id.productTypeText);
-        totalText = (TextView) findViewById(R.id.totalText);
-        quantityText = (TextView) findViewById(R.id.quantityText);
+        productTypeText =  findViewById(R.id.productTypeText);
+        totalText =  findViewById(R.id.totalText);
+        quantityText = findViewById(R.id.quantityText);
 
         builder = new AlertDialog.Builder(this);
 
@@ -105,11 +97,8 @@ public class MainActivity extends AppCompatActivity
         num9.setOnClickListener(this);
         num0.setOnClickListener(this);
 
-         //This will keep track of the selected item
 
-        cBut.setOnClickListener(view -> {
-            clear();
-        });
+        cBut.setOnClickListener(view -> clear());
 
 
         managerBut.setOnClickListener(view -> {
@@ -143,33 +132,29 @@ public class MainActivity extends AppCompatActivity
             productlist.setAdapter(adapter);
 
             builder.create();
-            builder.setTitle("Thank you for your pruchase!");
+            builder.setTitle("Thank you for your purchase!");
             builder.setMessage("Your purchase was " + myCashRegister.getQuantityWanted() +" " +myCashRegister.getName(item) + " for " + totalText.getText().toString() );
             builder.show();
 
            clear();
-
         });
 
 
         adapter = new CashRegisterAdapter(this, myCashRegister.listOfProducts);
         productlist.setAdapter(adapter);
 
-        productlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        productlist.setOnItemClickListener((adapterView, view, i, l) -> {
 
-                productTypeText.setText(myCashRegister.getName(i));
-                item = i;
-                if(quantityText.getText().toString().isEmpty()){
+            productTypeText.setText(myCashRegister.getName(i));
+            item = i;
+            if(quantityText.getText().toString().isEmpty()){
 
-                    return;
-                }
-
-              Double total = Double.parseDouble(myCashRegister.getPrice(i) ) * Double.parseDouble(quantityText.getText().toString());
-                totalText.setText( String.valueOf(String.format("%1$,.2f", total)));
-
+                return;
             }
+
+          Double total = Double.parseDouble(myCashRegister.getPrice(i) ) * Double.parseDouble(quantityText.getText().toString());
+            totalText.setText(String.format("%1$,.2f", total));
+
         });
 
 
@@ -188,7 +173,7 @@ public class MainActivity extends AppCompatActivity
 
         if(item >= 0){
             Double total = Double.parseDouble(myCashRegister.getPrice(item) ) * Double.parseDouble(quantityText.getText().toString());
-            totalText.setText( String.valueOf(String.format("%1$,.2f", total)));
+            totalText.setText(String.format("%1$,.2f", total));
 
         }
 

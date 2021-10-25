@@ -1,5 +1,6 @@
 package com.example.assignment2;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,17 +61,12 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.viewHold
     }
 
      @Override
-     public void onBindViewHolder(@NonNull viewHolder holder, int position) {
+     public void onBindViewHolder(@NonNull viewHolder holder, @SuppressLint("RecyclerView") int position) {
          holder.getNameText().setText(listOfHistory.get(position).name);
-         holder.getQuantityText().setText(listOfHistory.get(position).quantity);
-         holder.getTotalText().setText(listOfHistory.get(position).price);
+         holder.getQuantityText().setText(String.valueOf(listOfHistory.get(position).quantity));
+         holder.getTotalText().setText(String.valueOf(listOfHistory.get(position).price));
 
-         holder.itemView.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 listener.onHistoryClicked(listOfHistory.get(position));
-             }
-         });
+         holder.itemView.setOnClickListener(view -> listener.onHistoryClicked(listOfHistory.get(position)));
      }
 
     @Override
